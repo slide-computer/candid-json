@@ -97,7 +97,7 @@ class FloatClass implements JsonnableCandid {
 }
 
 class FixedIntClass implements JsonnableCandid {
-  constructor(private bits: number) {}
+  constructor(public bits: number) {}
 
   public toJSON(value: number | bigint): any {
     if (this.bits === 64) {
@@ -115,7 +115,7 @@ class FixedIntClass implements JsonnableCandid {
 }
 
 class FixedNatClass implements JsonnableCandid {
-  constructor(private bits: number) {}
+  constructor(public bits: number) {}
 
   public toJSON(value: number | bigint): any {
     if (this.bits === 64) {
@@ -155,14 +155,28 @@ class TupleClass implements JsonnableCandid {
 }
 
 class VecClass implements JsonnableCandid {
-  constructor(private type: JsonnableCandid) {}
+  private blobOptimization: boolean;
+
+  constructor(private type: JsonnableCandid) {
+    this.blobOptimization = type instanceof FixedNatClass && type.bits === 8;
+  }
 
   public toJSON(value: any[]): any {
+    if (this.blobOptimization) {
+      return [...value]
+        .map((byte: number) => byte.toString(16).padStart(2, "0"))
+        .join("");
+    }
     return value.map((v) => this.type.toJSON(v));
   }
 
-  public fromJSON(value: any[]): any {
-    return value.map((v) => this.type.fromJSON(v));
+  public fromJSON(value: number[] | string): any {
+    if (this.blobOptimization || typeof value === "string") {
+      return new Uint8Array(
+        (value as string).match(/.{1,2}/g)?.map((v) => parseInt(v, 16)) ?? [],
+      );
+    }
+    return (value as number[]).map((v) => this.type.fromJSON(v));
   }
 }
 
