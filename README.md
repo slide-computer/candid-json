@@ -33,6 +33,7 @@ const candid = new CandidJSON(({ IDL }) =>
         z: IDL.Null,
       }),
       i: IDL.Vec(IDL.Float64),
+      j: IDL.Vec(IDL.Nat8),
     }),
   );
   const input = {
@@ -46,6 +47,7 @@ const candid = new CandidJSON(({ IDL }) =>
       z: null,
     },
     i: [2.63, 5.24, 7.9234],
+    j: new TextEncoder().encode("candid"),
   };
   const json = JSON.stringify(candid.toJSON(input)); // JSON string in the ICRC-26 standard
   const output = candid.fromJSON(JSON.parse(json)); // Should be equal to input
