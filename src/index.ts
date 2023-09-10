@@ -155,7 +155,7 @@ class TupleClass implements JsonnableCandid {
 }
 
 class VecClass implements JsonnableCandid {
-  private blobOptimization: boolean;
+  private readonly blobOptimization: boolean;
 
   constructor(private type: JsonnableCandid) {
     this.blobOptimization = type instanceof FixedNatClass && type.bits === 8;
