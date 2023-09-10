@@ -15,7 +15,7 @@ The [ICRC-26](https://github.com/dfinity/ICRC/issues/30) standard standardizes t
 
 ## candid-json
 
-This library implements above spec in JS.
+This library implements the [ICRC-26](https://github.com/dfinity/ICRC/issues/30) standard in JS.
 
 Example usage:
 ```ts
