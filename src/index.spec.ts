@@ -16,6 +16,7 @@ test("CandidJSON", () => {
         z: IDL.Null,
       }),
       i: IDL.Vec(IDL.Float64),
+      j: IDL.Vec(IDL.Nat8),
     }),
   );
   const input = {
@@ -29,6 +30,7 @@ test("CandidJSON", () => {
       z: null,
     },
     i: [2.63, 5.24, 7.9234],
+    j: new TextEncoder().encode("candid"),
   };
   const json = JSON.stringify(candid.toJSON(input));
   const output = candid.fromJSON(JSON.parse(json));
