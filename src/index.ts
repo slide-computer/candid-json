@@ -161,7 +161,7 @@ class VecClass implements JsonnableCandid {
     this.blobOptimization = type instanceof FixedNatClass && type.bits === 8;
   }
 
-  public toJSON(value: any[]): any {
+  public toJSON(value: number[] | Uint8Array): any {
     if (this.blobOptimization) {
       return [...value]
         .map((byte: number) => byte.toString(16).padStart(2, "0"))
@@ -171,7 +171,7 @@ class VecClass implements JsonnableCandid {
   }
 
   public fromJSON(value: number[] | string): any {
-    if (this.blobOptimization || typeof value === "string") {
+    if (this.blobOptimization) {
       return new Uint8Array(
         (value as string).match(/.{1,2}/g)?.map((v) => parseInt(v, 16)) ?? [],
       );
