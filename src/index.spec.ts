@@ -9,7 +9,7 @@ test("CandidJSON", () => {
       d: IDL.Opt(IDL.Bool),
       e: IDL.Opt(IDL.Opt(IDL.Bool)),
       f: IDL.Nat,
-      g: IDL.Tuple(IDL.Nat16, IDL.Func),
+      g: IDL.Tuple(IDL.Nat16, IDL.Func()),
       h: IDL.Variant({
         x: IDL.Bool,
         y: IDL.Nat64,

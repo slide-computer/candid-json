@@ -321,8 +321,8 @@ export type InterfaceFactory = (idl: {
     Opt: (type: JsonnableCandid) => OptClass;
     Record: (fields: Record<string, JsonnableCandid>) => RecordClass;
     Variant: (fields: Record<string, JsonnableCandid>) => VariantClass;
-    Rec: RecClass;
-    Func: FuncClass;
+    Rec: () => RecClass;
+    Func: () => FuncClass;
     Service: (t?: Record<string, FuncClass>) => ServiceClass;
   };
 }) => JsonnableCandid;
@@ -357,8 +357,8 @@ export class CandidJSON implements JsonnableCandid {
         Opt: (type) => new OptClass(type),
         Record: (fields) => new RecordClass(fields),
         Variant: (fields) => new VariantClass(fields),
-        Rec: new RecClass(),
-        Func: new FuncClass(),
+        Rec: () => new RecClass(),
+        Func: () => new FuncClass(),
         Service: () => new ServiceClass(),
       },
     });
